@@ -1,3 +1,12 @@
+<h1>Weather Station (React version)</h1>
+<h2>Based on my <a href="https://www.openprocessing.org/sketch/899096">OpenProcessing sketch</a></h2>
+<p>
+This project is meant to be a near direct translation of my p5js sketch to React. Weather API data and list of cities are provided by <a href="https://openweathermap.org/api">openweathermap</a>.
+</p>
+<ol>
+    <li>Enter a city in the search bar.</li><li>Click the search button to display a list of results.</li><li>Click an option to display the weather data on the p5js sketch!</li>
+</ol>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
