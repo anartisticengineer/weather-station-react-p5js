@@ -41,9 +41,19 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div id="main">
-        <input type="text" placeholder="Enter a city" id="input-bar" />
-        <button id="submit-btn" onClick={this.handleSearch}>
+      <div className="d-flex flex-wrap justify-content-center p-2" id="main">
+        <input
+          type="text"
+          className="form-control my-1"
+          placeholder="Enter a city"
+          id="input-bar"
+        />
+        <button
+          className="btn btn-primary btn-block my-1"
+          id="submit-btn"
+          onClick={this.handleSearch}
+          disabled={this.state.cityNameIn.length < 3}
+        >
           Search
         </button>
         {/*----------Search results---------- */}
@@ -52,7 +62,12 @@ class SearchBar extends Component {
             <p>Search above</p>
           ) : (
             this.state.results.map((result, index) => (
-              <button key={index} onClick={this.handleChosenCity} id={result}>
+              <button
+                className="btn btn-dark btn-sm m-1"
+                key={index}
+                onClick={this.handleChosenCity}
+                id={result}
+              >
                 {result}
               </button>
             ))
