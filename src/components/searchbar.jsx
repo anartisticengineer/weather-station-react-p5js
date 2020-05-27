@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import CityData from "../city.list.min.json";
+import { useDispatch } from "react-redux";
+import { searchCity } from "../actions";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -11,8 +13,8 @@ class SearchBar extends Component {
   state = {
     cityNameIn: "",
     results: [],
-    chosenCity: "",
   };
+
   componentDidMount() {
     console.log("searchbar mounted");
     document.addEventListener("input", this.handleInput);
@@ -35,11 +37,13 @@ class SearchBar extends Component {
 
   handleChosenCity = (event) => {
     console.log(event.target.id);
-    this.setState({ chosenCity: event.target.id });
+    //dispatch with redux
+    //useDispatch(searchCity(event.target.id));
     this.setState({ cityNameIn: "", results: [] });
   };
 
   render() {
+    //const FONT_FAMILY = {"font-family: SIMPLIFICA Typeface, Arial, sans-serif"};
     return (
       <div className="d-flex flex-wrap justify-content-center p-2" id="main">
         <input
@@ -65,7 +69,7 @@ class SearchBar extends Component {
               <button
                 className="btn btn-dark btn-sm m-1"
                 key={index}
-                onClick={this.handleChosenCity}
+                onClick={() => this.handleChosenCity}
                 id={result}
               >
                 {result}

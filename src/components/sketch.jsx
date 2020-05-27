@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import Sketch from "react-p5";
+import { useSelector } from "react-redux";
+import { loadCity } from "../actions";
 
 class Main extends Component {
   //props: weatherData
+
   constructor(props) {
     super(props);
     this.mainFont = null;
+    //this.cityLoaded = useSelector((state) => state.cityLoaded);
   }
   state = {
     cityLoaded: false,
   };
-
   preload = (p5) => {
-    //p5.loadJSON("../city.list.min.json", this.getCityData);
-    //this.mainFont = p5.loadFont("SIMPLIFICA Typeface.ttf");
+    //this.mainFont = p5.loadFont("../SIMPLIFICA Typeface.ttf");
   };
 
   setup = (p5, canvasParentRef) => {
