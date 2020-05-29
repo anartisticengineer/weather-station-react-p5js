@@ -3,5 +3,5 @@ export const searchCity = (cityIn) => {
 };
 
 export const loadCity = () => {
-  return { type: "LOAD" };
+  return { type: "CITY_LOADED" };
 };

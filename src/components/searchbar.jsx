@@ -1,33 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import CityData from "../city.list.min.json";
-import { useDispatch } from "react-redux";
-import { searchCity } from "../actions";
+//import { useDispatch } from "react-redux";
 
-class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.cityData = CityData;
-    this.cityIds = [];
-    this.cityNames = [];
-  }
-  state = {
-    cityNameIn: "",
-    results: [],
+let results = [];
+let cityNameIn = "";
+
+const SearchBar = () => {
+  const cityIds = CityData.map((city) => city.id);
+  const cityNames = CityData.map((city) => city.name);
+
+  const handleChange = (event) => {
+    cityNameIn = event.target.value;
+    if (cityNameIn.length > 3) {
+      document.getElementById("submit-btn").removeAttribute("disabled");
+    } else {
+      document.getElementById("submit-btn").setAttribute("disabled", "true");
+    }
   };
 
-  componentDidMount() {
-    console.log("searchbar mounted");
-    document.addEventListener("input", this.handleInput);
-    this.cityIds = this.cityData.map((city) => city.id);
-    this.cityNames = this.cityData.map((city) => city.name);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("input", this.handleInput);
-  }
+  const handleSearch = () => {
+    //console.log("search");
+    let regEx = new RegExp(cityNameIn, "i");
+    results = cityNames.filter((city) => regEx.test(city));
+  };
+
+  /*
+    cityLoaded: "",
   //---------------handle search results-----------------------
-  handleInput = (event) => {
-    this.setState({ cityNameIn: event.target.value });
-  };
   handleSearch = () => {
     let regEx = new RegExp(this.state.cityNameIn, "i");
     this.setState({
@@ -37,49 +36,46 @@ class SearchBar extends Component {
 
   handleChosenCity = (event) => {
     console.log(event.target.id);
-    //dispatch with redux
-    //useDispatch(searchCity(event.target.id));
+    this.setState({ cityLoaded: event.target.id });
     this.setState({ cityNameIn: "", results: [] });
   };
-
-  render() {
-    //const FONT_FAMILY = {"font-family: SIMPLIFICA Typeface, Arial, sans-serif"};
-    return (
-      <div className="d-flex flex-wrap justify-content-center p-2" id="main">
-        <input
-          type="text"
-          className="form-control my-1"
-          placeholder="Enter a city"
-          id="input-bar"
-        />
-        <button
-          className="btn btn-primary btn-block my-1"
-          id="submit-btn"
-          onClick={this.handleSearch}
-          disabled={this.state.cityNameIn.length < 3}
-        >
-          Search
-        </button>
-        {/*----------Search results---------- */}
-        <div id="results-display">
-          {this.state.results.length === 0 ? (
-            <p>Search above</p>
-          ) : (
-            this.state.results.map((result, index) => (
-              <button
-                className="btn btn-dark btn-sm m-1"
-                key={index}
-                onClick={() => this.handleChosenCity}
-                id={result}
-              >
-                {result}
-              </button>
-            ))
-          )}
-        </div>
+  */
+  //const FONT_FAMILY = {"font-family: SIMPLIFICA Typeface, Arial, sans-serif"};
+  return (
+    <div
+      className="d-flex flex-wrap justify-content-center p-2"
+      id="main"
+      style={{ fontFamily: "SIMPLIFICA Typeface, Arial, sans-serif" }}
+    >
+      <input
+        type="text"
+        className="form-control my-1"
+        placeholder="Enter a city"
+        id="input-bar"
+        onChange={handleChange}
+      />
+      <button
+        className="btn btn-primary btn-block my-1"
+        id="submit-btn"
+        onClick={handleSearch()}
+        disabled
+      >
+        Search
+      </button>
+      {/*----------Search results---------- */}
+      <div id="results-display">
+        {results.length === 0 ? (
+          <p>Search above</p>
+        ) : (
+          results.map((result, index) => (
+            <button className="btn btn-dark btn-sm m-1" key={index} id={result}>
+              {result}
+            </button>
+          ))
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default SearchBar;

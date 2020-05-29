@@ -5,18 +5,14 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import rootReducer from "./reducers";
+import * as action from "./actions";
 import { Provider } from "react-redux";
 
-//Redux
-/*
-const SEARCH = "SEARCH";
-
-*/
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-
+//store.dispatch({ type: "CITY_LOADED" });
 ReactDOM.render(
   <Provider store={store}>
     <App />

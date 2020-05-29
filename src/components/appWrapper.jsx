@@ -1,17 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import Main from "./sketch";
 import SearchBar from "./searchbar";
+import { useSelector, useDispatch } from "react-redux";
 
-class AppWrapper extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <Main />
-        <SearchBar />
-      </React.Fragment>
-    );
-  }
-}
+const AppWrapper = () => {
+  const cityIn = useSelector((state) => state.cityIn);
+  const cityLoaded = useSelector((state) => state.cityLoaded);
+
+  return (
+    <React.Fragment>
+      <Main cityLoaded={cityLoaded} />
+      <SearchBar />
+    </React.Fragment>
+  );
+};
 
 export default AppWrapper;

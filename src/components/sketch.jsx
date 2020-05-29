@@ -1,31 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import Sketch from "react-p5";
-import { useSelector } from "react-redux";
-import { loadCity } from "../actions";
 
-class Main extends Component {
-  //props: weatherData
+const Main = (props) => {
+  const preload = (p5) => {};
 
-  constructor(props) {
-    super(props);
-    this.mainFont = null;
-    //this.cityLoaded = useSelector((state) => state.cityLoaded);
-  }
-  state = {
-    cityLoaded: false,
-  };
-  preload = (p5) => {
-    //this.mainFont = p5.loadFont("../SIMPLIFICA Typeface.ttf");
-  };
-
-  setup = (p5, canvasParentRef) => {
+  const setup = (p5, canvasParentRef) => {
     p5.createCanvas(400, 400, p5.WEBGL).parent(canvasParentRef);
     //GLOBAL PROPERTIES
-    //p5.textFont(this.mainFont);
     p5.textAlign(p5.CENTER, p5.CENTER);
     p5.imageMode(p5.CENTER);
   };
-  draw = (p5) => {
+  const draw = (p5) => {
     p5.background(255, 0);
     p5.push();
     //drawSphere();
@@ -35,7 +20,7 @@ class Main extends Component {
     p5.rotateZ(-p5.PI / 6);
     p5.sphere(100);
     //end of drawSphere();
-    if (this.state.cityLoaded) {
+    if (props.cityLoaded) {
       //drawLine with city info
       let theta = this.props.weatherData.coord.lon;
       let phi = this.props.weatherData.coord.lat;
@@ -65,19 +50,12 @@ class Main extends Component {
     }
     p5.pop();
   };
-  //---------------
-  getCityData = (cities) => {
-    this.cityIds = cities.map((city) => city.id);
-    this.cityNames = cities.map((city) => city.name);
-    console.log("City Data Loaded");
-  };
-  render() {
-    return (
-      <div className="d-flex justify-content-center">
-        <Sketch preload={this.preload} setup={this.setup} draw={this.draw} />
-      </div>
-    );
-  }
-}
+
+  return (
+    <div className="d-flex justify-content-center">
+      <Sketch preload={preload} setup={setup} draw={draw} />
+    </div>
+  );
+};
 
 export default Main;
