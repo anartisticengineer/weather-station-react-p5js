@@ -1,6 +1,5 @@
 import React from "react";
 import CityData from "../city.list.min.json";
-//import { useDispatch } from "react-redux";
 
 let results = [];
 let cityNameIn = "";
