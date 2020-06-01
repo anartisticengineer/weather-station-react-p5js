@@ -1,3 +1,5 @@
+//action creators
+//city in will actually be the corresponding id!
 export const searchCity = (cityIn) => {
   return { type: "SEARCH", cityIn };
 };
