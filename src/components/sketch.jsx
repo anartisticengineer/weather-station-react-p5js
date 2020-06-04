@@ -1,12 +1,17 @@
 import React from "react";
 import Sketch from "react-p5";
+import mainFont from "../SIMPLIFICA Typeface.ttf";
 
 const Main = (props) => {
-  const preload = (p5) => {};
+  let font;
+  const preload = (p5) => {
+    font = p5.loadFont(mainFont);
+  };
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(400, 400, p5.WEBGL).parent(canvasParentRef);
+    p5.createCanvas(800, 400, p5.WEBGL).parent(canvasParentRef);
     //GLOBAL PROPERTIES
+    p5.textFont(font);
     p5.textAlign(p5.CENTER, p5.CENTER);
     p5.imageMode(p5.CENTER);
   };
@@ -22,12 +27,19 @@ const Main = (props) => {
     //end of drawSphere();
     if (props.cityLoaded) {
       //drawLine with city info
-      let theta = this.props.weatherData.coord.lon;
-      let phi = this.props.weatherData.coord.lat;
+      let theta = props.weatherData[1].coord.lon;
+      let phi = props.weatherData[1].coord.lat;
+      /*
       let location = p5.Vector.fromAngles(
         p5.radians(theta),
         p5.radians(phi),
         200
+      );
+      */
+      let location = p5.createVector(
+        200 * p5.sin(phi) * p5.cos(theta),
+        200 * p5.sin(phi) * p5.sin(theta),
+        200 * p5.cos(phi)
       );
       p5.stroke(255, 0, 0);
       p5.strokeWeight(3);
@@ -35,18 +47,18 @@ const Main = (props) => {
       //text
       p5.fill(0);
       p5.textSize(50);
-      p5.translate(location.x * 1.25, location.y * 1.25, location.z * 1.25);
-      p5.rotateY(-p5.millis() / 3000);
-      p5.text(this.props.weatherData.name, 0, 0, 0);
+      p5.translate(location.x, location.y, location.z);
+      p5.rotateY(p5.millis() / 3000);
+      p5.text(props.weatherData[1].name, 0, 0, 0);
       p5.textSize(20);
       p5.text(
-        p5.str(p5.round(this.props.weatherData.main.temp)) + " C",
+        p5.str(p5.round(props.weatherData[1].main.temp)) + " C",
         80,
         0,
         0
       );
       p5.textSize(20);
-      p5.text(p5.str(p5.round(this.props.weatherData[0].main)), 80, 80, 0);
+      p5.text(p5.str(p5.round(props.weatherData[0].main)), 80, 80, 0);
     }
     p5.pop();
   };
@@ -59,3 +71,15 @@ const Main = (props) => {
 };
 
 export default Main;
+
+Main.defaultProps = {
+  weatherData: [
+    { main: "clear" },
+    {
+      main: { temp: 10 },
+      coord: { lon: 0, lat: 0 },
+      name: "Middle of Nowhere",
+    },
+  ],
+  cityLoaded: false,
+};
