@@ -23,7 +23,7 @@ DataBase.prototype.getResultsAsIds = function () {
     resultsIndex < this.cityResults.length;
     resultsIndex++
   ) {
-    idsIndex = this.cityResults.indexOf(this.cityResults[resultsIndex]);
+    idsIndex = this.cityNames.indexOf(this.cityResults[resultsIndex]);
     idResults.push(this.cityIds[idsIndex]);
     idsIndex++; //to avoid potential ambiguity
   }
