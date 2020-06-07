@@ -3,6 +3,14 @@
 <p>
 This project is meant to be a near direct translation of my p5js sketch to React. Weather API data and list of cities are provided by <a href="https://openweathermap.org/api">openweathermap</a>.
 </p>
+<strong>Before starting, follow these instructions!</strong>
+<ol>
+    <li>Create a free account on openweathermap.org</li>
+    <li>When signed in, navigate to the tab titled, 'API Keys'</li>
+    <li>Copy the given API key</li>
+    <li>Within this repositoty, navigate to src/handleWeatherAPI.js and paste the API key where it says, YOUR_KEY_HERE.</li>
+</ol>
+<p>When complete, you can follow these steps after starting the application on a local server.</p>
 <ol>
     <li>Enter a city in the search bar.</li><li>Click the search button to display a list of results.</li><li>Click an option to display the weather data on the p5js sketch!</li>
 </ol>
