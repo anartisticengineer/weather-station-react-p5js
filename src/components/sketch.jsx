@@ -1,23 +1,38 @@
 import React from "react";
 import Sketch from "react-p5";
 import mainFont from "../SIMPLIFICA Typeface.ttf";
+import { Component } from "react";
 
-const Main = (props) => {
-  let font;
-  let weatherData = {};
+class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      font: null,
+      weatherData: {},
+      lon: 0,
+      lat: 0,
+      cityName: "",
+      temp: 0,
+      description: "",
+    };
+  }
 
-  const preload = (p5) => {
-    font = p5.loadFont(mainFont);
+  componentDidUpdate() {
+    this.loadData(this.props.weatherUrl);
+  }
+
+  preload = (p5) => {
+    this.setState({ font: p5.loadFont(mainFont) });
   };
 
-  const setup = (p5, canvasParentRef) => {
+  setup = (p5, canvasParentRef) => {
     p5.createCanvas(800, 400, p5.WEBGL).parent(canvasParentRef);
     //GLOBAL PROPERTIES
-    p5.textFont(font);
+    p5.textFont(this.state.font);
     p5.textAlign(p5.CENTER, p5.CENTER);
     p5.imageMode(p5.CENTER);
   };
-  const draw = (p5) => {
+  draw = (p5) => {
     p5.background(255, 0);
     p5.push();
     //drawSphere();
@@ -27,11 +42,11 @@ const Main = (props) => {
     p5.rotateZ(-p5.PI / 6);
     p5.sphere(100);
     //end of drawSphere();
-    /*
-    if (props.cityLoaded) {
+
+    if (this.props.cityLoaded) {
       //drawLine with city info
-      let theta = weatherData.coord.lon;
-      let phi = weatherData.coord.lat;
+      let theta = this.state.lon;
+      let phi = this.state.lat;
       let location = p5.createVector(
         200 * p5.sin(phi) * p5.cos(theta),
         200 * p5.sin(phi) * p5.sin(theta),
@@ -45,26 +60,36 @@ const Main = (props) => {
       p5.textSize(50);
       p5.translate(location.x, location.y, location.z);
       p5.rotateY(p5.millis() / 3000);
-      p5.text(weatherData[1].name, 0, 0, 0);
+      p5.text(this.state.cityName, 0, 0, 0);
       p5.textSize(20);
-      p5.text(p5.str(p5.round(weatherData[1].main.temp)) + " C", 80, 0, 0);
+      p5.text(p5.str(p5.round(this.state.temp)) + " C", 80, 0, 0);
       p5.textSize(20);
-      p5.text(p5.str(p5.round(weatherData[0].main)), 80, 80, 0);
+      p5.text(this.state.description, 80, 80, 0);
     }
-    */
+
     p5.pop();
   };
 
-  const parseData = (dataIn) => {
-    weatherData = Object.assign({}, dataIn);
-    console.log(weatherData);
-  };
-  return (
-    <div className="d-flex justify-content-center">
-      <Sketch preload={preload} setup={setup} draw={draw} />
-    </div>
-  );
-};
+  async loadData(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    this.setState({
+      lon: data.coord.lon,
+      lat: data.coord.lat,
+      cityName: data.name,
+      temp: data.main.temp,
+      description: data.weather[0].description,
+    });
+  }
+
+  render() {
+    return (
+      <div className="d-flex justify-content-center">
+        <Sketch preload={this.preload} setup={this.setup} draw={this.draw} />
+      </div>
+    );
+  }
+}
 
 export default Main;
 
