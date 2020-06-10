@@ -4,6 +4,8 @@ import mainFont from "../SIMPLIFICA Typeface.ttf";
 
 const Main = (props) => {
   let font;
+  let weatherData = {};
+
   const preload = (p5) => {
     font = p5.loadFont(mainFont);
   };
@@ -25,17 +27,11 @@ const Main = (props) => {
     p5.rotateZ(-p5.PI / 6);
     p5.sphere(100);
     //end of drawSphere();
+    /*
     if (props.cityLoaded) {
       //drawLine with city info
-      let theta = props.weatherData[1].coord.lon;
-      let phi = props.weatherData[1].coord.lat;
-      /*
-      let location = p5.Vector.fromAngles(
-        p5.radians(theta),
-        p5.radians(phi),
-        200
-      );
-      */
+      let theta = weatherData.coord.lon;
+      let phi = weatherData.coord.lat;
       let location = p5.createVector(
         200 * p5.sin(phi) * p5.cos(theta),
         200 * p5.sin(phi) * p5.sin(theta),
@@ -49,20 +45,20 @@ const Main = (props) => {
       p5.textSize(50);
       p5.translate(location.x, location.y, location.z);
       p5.rotateY(p5.millis() / 3000);
-      p5.text(props.weatherData[1].name, 0, 0, 0);
+      p5.text(weatherData[1].name, 0, 0, 0);
       p5.textSize(20);
-      p5.text(
-        p5.str(p5.round(props.weatherData[1].main.temp)) + " C",
-        80,
-        0,
-        0
-      );
+      p5.text(p5.str(p5.round(weatherData[1].main.temp)) + " C", 80, 0, 0);
       p5.textSize(20);
-      p5.text(p5.str(p5.round(props.weatherData[0].main)), 80, 80, 0);
+      p5.text(p5.str(p5.round(weatherData[0].main)), 80, 80, 0);
     }
+    */
     p5.pop();
   };
 
+  const parseData = (dataIn) => {
+    weatherData = Object.assign({}, dataIn);
+    console.log(weatherData);
+  };
   return (
     <div className="d-flex justify-content-center">
       <Sketch preload={preload} setup={setup} draw={draw} />
@@ -73,13 +69,6 @@ const Main = (props) => {
 export default Main;
 
 Main.defaultProps = {
-  weatherData: [
-    { main: "clear" },
-    {
-      main: { temp: 10 },
-      coord: { lon: 0, lat: 0 },
-      name: "Middle of Nowhere",
-    },
-  ],
+  weatherUrl: "",
   cityLoaded: false,
 };

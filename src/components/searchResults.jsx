@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { SEARCH } from "../actions";
 import { useDispatch } from "react-redux";
 
 const SearchResults = (props) => {
@@ -16,7 +17,7 @@ const SearchResults = (props) => {
             id={props.idResults[index]}
             onClick={() =>
               dispatch({
-                type: "SEARCH",
+                type: SEARCH,
                 cityIn: props.idResults[index],
               })
             }

@@ -15,6 +15,7 @@ DataBase.prototype.getResults = function (cityNameIn) {
   this.cityResults = this.filterAmbiguous(initialResults);
   return this.cityResults;
 };
+//corresponding IDs
 DataBase.prototype.getResultsAsIds = function () {
   let idsIndex = 0;
   let idResults = [];

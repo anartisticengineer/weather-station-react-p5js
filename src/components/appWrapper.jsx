@@ -1,19 +1,25 @@
 import React from "react";
 import Main from "./sketch";
 import SearchBar from "./searchbar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import WeatherAPI from "../handleWeatherAPI.js";
+import { URL, CITY_IS_LOADED } from "../actions";
 
 const AppWrapper = () => {
-  const cityIn = useSelector((state) => state.cityIn); //city name
-  //const cityLoaded = useSelector((state) => state.cityLoaded); //boolean
+  const cityIn = useSelector((state) => state.cityIn); //city name (ID)
+  const cityLoaded = useSelector((state) => state.cityLoaded);
+  const urlIn = useSelector((state) => state.urlIn);
+
+  const urlDispatch = useDispatch();
+
   if (cityIn !== "") {
-    //console.log("city entered");
     let weatherAPI = new WeatherAPI(cityIn);
+    urlDispatch({ type: URL, urlIn: weatherAPI.urlOut() });
+    urlDispatch({ type: CITY_IS_LOADED });
   }
   return (
     <React.Fragment>
-      <Main cityLoaded={cityIn !== ""} />
+      <Main cityLoaded={cityLoaded} weatherUrl={urlIn} />
       <SearchBar />
     </React.Fragment>
   );
