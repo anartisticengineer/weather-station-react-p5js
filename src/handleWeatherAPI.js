@@ -2,7 +2,7 @@ class WeatherAPI {
   constructor(cityId, units = "metric") {
     let urlMain = "http://api.openweathermap.org/data/2.5/weather?";
     let urlCityId = "id=" + cityId;
-    let urlAppId = "&appid=2f541877f4e0621b60286fc1009d5933";
+    let urlAppId = "&appid=YOUR_API_KEY";
     let urlUnits = "&units=" + units;
     this.url = urlMain + urlCityId + urlAppId + urlUnits;
   }
