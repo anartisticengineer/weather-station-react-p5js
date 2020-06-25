@@ -62,7 +62,13 @@ class Main extends Component {
       p5.rotateY(p5.millis() / 3000);
       p5.text(this.state.cityName, 0, 0, 0);
       p5.textSize(20);
-      p5.text(p5.str(p5.round(this.state.temp)) + " C", 80, 0, 0);
+      p5.text(
+        p5.str(p5.round(this.state.temp)) +
+          (this.props.units === "metric" ? " C" : " F"),
+        80,
+        0,
+        0
+      );
       p5.textSize(20);
       p5.text(this.state.description, 80, 80, 0);
     }

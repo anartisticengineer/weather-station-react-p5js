@@ -1,4 +1,5 @@
 <h1>Weather Station (React version)</h1>
+<img src="./src/Screen Shot 2020-06-10.jpg" alt="Screen shot"/>
 <h2>Based on my <a href="https://www.openprocessing.org/sketch/899096">OpenProcessing sketch</a></h2>
 <p>
 This project is meant to be a near direct translation of my p5js sketch to React. Weather API data and list of cities are provided by <a href="https://openweathermap.org/api">openweathermap</a>.
