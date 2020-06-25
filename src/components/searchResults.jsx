@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { SEARCH } from "../actions";
+import { SEARCH, UNITS } from "../actions";
 import { useDispatch } from "react-redux";
 
 const SearchResults = (props) => {
   const dispatch = useDispatch();
+
+  const dispatchBoth = (index) => {
+    dispatch({ type: SEARCH, cityIn: props.idResults[index] });
+    dispatch({ type: UNITS, unitsIn: props.units });
+  };
 
   return (
     <div id="results-display">
@@ -15,12 +20,7 @@ const SearchResults = (props) => {
             className="btn btn-dark btn-sm m-1"
             key={index}
             id={props.idResults[index]}
-            onClick={() =>
-              dispatch({
-                type: SEARCH,
-                cityIn: props.idResults[index],
-              })
-            }
+            onClick={() => dispatchBoth(index)}
           >
             {result}
           </button>

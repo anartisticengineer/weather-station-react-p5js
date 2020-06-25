@@ -12,8 +12,9 @@ class SearchBar extends Component {
     results: [],
     idResults: [],
     cityNameIn: "",
-    citySelected: "",
+    units: "metric",
   };
+
   componentDidMount() {
     document.addEventListener("input", this.handleChange);
     document
@@ -40,10 +41,12 @@ class SearchBar extends Component {
     this.setState({ idResults: data.getResultsAsIds() });
   }
 
-  handleSelectedCity = (event) => {
-    console.log(event.target.id);
-    this.setState({ citySelected: event.target.id });
-    this.setState({ results: [] });
+  handleToggle = () => {
+    if (this.state.units === "metric") {
+      this.setState({ units: "imperial" });
+    } else {
+      this.setState({ units: "metric" });
+    }
   };
 
   render() {
@@ -71,12 +74,20 @@ class SearchBar extends Component {
             >
               Search
             </button>
+            <button
+              className="btn btn-secondary"
+              id="c-or-f"
+              onClick={this.handleToggle}
+            >
+              {this.state.units === "metric" ? "C" : "F"}
+            </button>
           </div>
         </div>
         {/*Passing the search results to a separate component to allow hooks */}
         <SearchResults
           results={this.state.results}
           idResults={this.state.idResults}
+          units={this.state.units}
         />
       </div>
     );
